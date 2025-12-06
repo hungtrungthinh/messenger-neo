@@ -47,6 +47,14 @@
     ],
     "macOS": {
       "minimumSystemVersion": "10.13"
+    },
+    "windows": {
+      "wix": {
+        "language": "en-US"
+      },
+      "nsis": {
+        "installMode": "currentUser"
+      }
     }
   }
 }
