@@ -1,9 +1,10 @@
-// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 use tauri::{
     menu::{Menu, MenuItem, PredefinedMenuItem, Submenu},
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
     Manager, WebviewUrl, WebviewWindowBuilder,
 };
+
+mod analytics;
 
 #[tauri::command]
 fn open_settings(app: tauri::AppHandle) {
@@ -113,7 +114,16 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_notification::init())
+        .plugin(tauri_plugin_notification::init())
         .setup(|app| {
+            // Track App Start & Heartbeat
+            let analytics = analytics::Analytics::new(app.handle());
+            analytics.track_event("app_open", serde_json::json!({
+                "platform": std::env::consts::OS,
+                "version": app.package_info().version.to_string(),
+            }));
+            analytics.start_heartbeat();
+
             // Create app menu
             let settings_item = MenuItem::with_id(app, "settings", "Settings...", true, Some("CmdOrCtrl+,"))?;
             let dark_mode_item = MenuItem::with_id(app, "dark_mode", "Toggle Dark Mode", true, Some("CmdOrCtrl+D"))?;
