@@ -42,6 +42,9 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tauri_macOS_signingIdentity: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
         with:
           tagName: ${{ github.ref_name }}
           releaseName: 'Messenger Neo v__VERSION__'
@@ -49,3 +52,5 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: --target aarch64-apple-darwin
+          includeRelease: true
+          includeUpdaterJson: false
