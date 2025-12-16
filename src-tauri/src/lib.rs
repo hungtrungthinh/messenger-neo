@@ -30,26 +30,13 @@ fn open_settings(app: tauri::AppHandle) {
 
 #[tauri::command]
 fn toggle_dark_mode(window: tauri::WebviewWindow) {
-    // Inject dark mode CSS into messenger.com
+    // OLD METHOD: CSS Filter Invert -> Caused severe lag/flickering
+    // NEW METHOD: Let user use native Messenger Dark Mode settings
+    // or we can try to toggle system theme preference if Tauri supports it mechanism.
+    // For now, we simply alert the user to use the built-in switch for best performance.
+    
     let script = r#"
-        (function() {
-            const darkStyle = document.getElementById('custom-dark-mode');
-            if (darkStyle) {
-                darkStyle.remove();
-            } else {
-                const style = document.createElement('style');
-                style.id = 'custom-dark-mode';
-                style.textContent = `
-                    html, body {
-                        filter: invert(1) hue-rotate(180deg) !important;
-                    }
-                    img, video, [style*="background-image"] {
-                        filter: invert(1) hue-rotate(180deg) !important;
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-        })();
+        alert("For best performance, please use the native Dark Mode in Messenger Settings:\n\nClick your Profile Picture -> Preferences -> Appearance");
     "#;
     let _ = window.eval(script);
 }
