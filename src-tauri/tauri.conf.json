@@ -46,7 +46,7 @@
       "icons/icon.ico"
     ],
     "macOS": {
-      "signingIdentity": "Apple Development: hungtrungthinh@gmail.com (MXT36FW542)",
+      "signingIdentity": null,
       "minimumSystemVersion": "10.13"
     },
     "windows": {
