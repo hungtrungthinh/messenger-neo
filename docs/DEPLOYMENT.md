@@ -11,19 +11,19 @@ You must organize your server folders exactly as follows to support cross-platfo
 ```text
 /apps/messenger-neo/
 ├── mac/                <-- For macOS (All Architectures)
-│   ├── latest-mac.yml  (Manifest file)
-│   ├── latest-arm64.zip
-│   ├── latest-arm64.dmg
-│   ├── latest-x64.zip
-│   └── latest-x64.dmg
+│   ├── latest-mac.yml  (Manifest file - CRITICAL)
+│   ├── Messenger Neo-1.14.1-arm64.zip
+│   ├── Messenger Neo-1.14.1-arm64.dmg
+│   ├── Messenger Neo-1.14.1-x64.zip
+│   └── Messenger Neo-1.14.1-x64.dmg
 │
 ├── win/                <-- For Windows (All Architectures)
-│   ├── latest.yml      (Manifest file)
-│   └── Messenger Neo-Setup-0.1.0.exe
+│   ├── latest.yml      (Manifest file - CRITICAL)
+│   └── Messenger Neo-Setup-1.14.1.exe
 │
 └── linux/              <-- For Linux
-    ├── latest-linux.yml (Manifest file)
-    └── latest-x64.AppImage
+    ├── latest-linux.yml (Manifest file - CRITICAL)
+    └── Messenger Neo-1.14.1-x64.AppImage
 ```
 
 ## 3. Build & Release Process
@@ -38,7 +38,7 @@ Run the build command on the target OS machine:
 ```bash
 npm run build
 ```
-*   **On macOS**: Generates `latest-mac.yml`, `.dmg`, `.zip` (for both `arm64` and `x64`).
+*   **On macOS**: Generates `latest-mac.yml`, `Messenger Neo-...-arm64.dmg`, `.zip` (Universal support).
 *   **On Windows**: Generates `latest.yml`, `.exe` (NSIS), `.appx` (Store).
 *   **On Linux**: Generates `latest-linux.yml`, `.AppImage`, `.deb`.
 
