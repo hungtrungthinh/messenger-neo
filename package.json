@@ -3,7 +3,7 @@
   "private": true,
   "description": "A privacy-focused Messenger client",
   "author": "Messenger Neo Team <support@boringlab.site>",
-  "version": "0.1.0",
+  "version": "1.14.1",
   "main": "dist-electron/main.js",
   "type": "module",
   "build": {
@@ -26,7 +26,7 @@
           ]
         }
       ],
-      "artifactName": "latest-${arch}.${ext}",
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
       "icon": "public/icons/icon.png",
       "publish": {
         "provider": "generic",
@@ -68,7 +68,7 @@
         "AppImage",
         "deb"
       ],
-      "artifactName": "latest-${arch}.${ext}",
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
       "icon": "public/icons/icon.png",
       "category": "Network",
       "publish": {
