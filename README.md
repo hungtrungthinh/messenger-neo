@@ -2,23 +2,23 @@
 
 A privacy-focused, cross-platform Messenger desktop client built with Tauri + React.
 
-## ✨ Features
+## Features
 
-- 🌐 **Native WebView** - Loads messenger.com directly (no iframe restrictions)
-- 🌓 **Dark/Light Theme** - Toggle dark mode with `Cmd+D`
-- 🔒 **Privacy Features** - Hide read receipts, typing indicators
-- 📱 **System Tray** - Minimize to tray with quick access menu
-- ⚡ **Lightweight** - Only ~5-10MB vs 180MB+ for Electron alternatives
-- 🚀 **Fast Startup** - Sub-second launch time
-- 💾 **Low Memory** - Uses ~30-40MB RAM vs 200-300MB for Electron apps
+- **Native WebView** - Loads messenger.com directly (no iframe restrictions)
+- **Dark/Light Theme** - Toggle dark mode with `Cmd+D`
+- **Privacy Features** - Hide read receipts, typing indicators
+- **System Tray** - Minimize to tray with quick access menu
+- **Lightweight** - Only ~5-10MB vs 180MB+ for Electron alternatives
+- **Fast Startup** - Sub-second launch time
+- **Low Memory** - Uses ~30-40MB RAM vs 200-300MB for Electron apps
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend**: React + TypeScript (for Settings UI)
 - **Backend**: Rust + Tauri 2.0
 - **WebView**: Native macOS WebKit with Chrome User-Agent
 
-## 📦 Installation
+## Installation
 
 ### Prerequisites
 
@@ -45,7 +45,7 @@ npm run tauri build
 
 The built application will be in `src-tauri/target/release/bundle/`.
 
-## ⌨️ Keyboard Shortcuts
+## Keyboard Shortcuts
 
 | Shortcut | Action |
 |----------|--------|
@@ -53,7 +53,7 @@ The built application will be in `src-tauri/target/release/bundle/`.
 | `⌘ + D` | Toggle Dark Mode |
 | `⌘ + Q` | Quit Application |
 
-## 📋 App Menu
+## App Menu
 
 Access from the menu bar:
 - **Messenger → Settings...** - Open settings window
@@ -61,7 +61,7 @@ Access from the menu bar:
 - **Messenger → Hide Read Receipts** - Others won't see when you've read messages
 - **Messenger → Quit Messenger** - Exit the app
 
-## 🔧 System Tray
+## System Tray
 
 Right-click the tray icon for:
 - Show Window
@@ -69,7 +69,7 @@ Right-click the tray icon for:
 - Settings...
 - Quit Messenger
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 messenger-desktop/
@@ -87,7 +87,7 @@ messenger-desktop/
 └── package.json
 ```
 
-## 🔒 Privacy Notes
+## Privacy Notes
 
 This app includes privacy features that inject CSS/JS into messenger.com:
 - **Hide Read Receipts**: Hides "Seen" indicators
@@ -95,7 +95,7 @@ This app includes privacy features that inject CSS/JS into messenger.com:
 
 These features work by injecting code into the loaded webpage.
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 This is an unofficial Messenger client and is not affiliated with, authorized, maintained, sponsored or endorsed by Meta/Facebook or any of its affiliates or subsidiaries.
 
@@ -114,7 +114,7 @@ This project is **PROPRIETARY** and is **NOT** Open Source.
 
 See [LICENSE](LICENSE) for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Inspired by [Caprine](https://github.com/sindresorhus/caprine)
 - Built with [Tauri 2.0](https://tauri.app/)
