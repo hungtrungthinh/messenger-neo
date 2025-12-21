@@ -18,13 +18,7 @@ export interface Translations {
 
     // Appearance Section
     appearance: string;
-    theme: string;
-    themeDesc: string;
-    themeSystem: string;
-    themeLight: string;
-    themeDark: string;
-    darkModeMessenger: string;
-    darkModeMessengerDesc: string;
+    // Theme keys removed as per PRD (System Sync Only)
     toggle: string;
 
     // Privacy Section
@@ -35,6 +29,8 @@ export interface Translations {
     hideTypingIndicatorDesc: string;
     blockLinkTracking: string;
     blockLinkTrackingDesc: string;
+    minimizeToTray: string; // Added for Settings UI
+    minimizeToTrayDesc: string;
 
     // Keyboard Shortcuts Section
     keyboardShortcuts: string;
@@ -62,6 +58,18 @@ export interface Translations {
     aboutDescription1: string;
     aboutDescription2: string;
     disclaimer: string;
+    visitWebsite: string;
+
+    // Auto Update
+    checkForUpdates: string;
+    checkingForUpdates: string;
+    updateAvailable: string;
+    updateNotAvailable: string;
+    updateError: string;
+    downloadManually: string;
+    updateDownloaded: string;
+    restartApp: string;
+    closeBtn: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -69,13 +77,7 @@ export const translations: Record<Language, Translations> = {
     en: {
         settings: 'Settings',
         appearance: 'Appearance',
-        theme: 'Theme',
-        themeDesc: 'Choose your preferred color scheme',
-        themeSystem: 'System',
-        themeLight: 'Light',
-        themeDark: 'Dark',
-        darkModeMessenger: 'Dark Mode for Messenger',
-        darkModeMessengerDesc: 'Apply dark filter to messenger.com',
+
         toggle: 'Toggle',
         privacy: 'Privacy',
         hideReadReceipts: 'Hide Read Receipts',
@@ -84,6 +86,8 @@ export const translations: Record<Language, Translations> = {
         hideTypingIndicatorDesc: "Others won't see when you're typing",
         blockLinkTracking: 'Block Link Tracking',
         blockLinkTrackingDesc: "Remove Facebook's tracking from links",
+        minimizeToTray: 'Minimize to Tray',
+        minimizeToTrayDesc: 'Minimize window to system tray instead of closing',
         keyboardShortcuts: 'Keyboard Shortcuts',
         openSettings: 'Open Settings',
         toggleDarkMode: 'Toggle Dark Mode',
@@ -100,22 +104,27 @@ export const translations: Record<Language, Translations> = {
         about: 'About',
         version: 'Version',
         aboutTitle: 'Messenger Neo',
-        aboutDescription1: 'Replacement for Facebook Messenger Desktop - the official app was discontinued on December 15, 2025.',
-        aboutDescription2: "With this app, you don't need to open a web browser to use Messenger. This is a lightweight, fast desktop app with enhanced privacy features.",
-        disclaimer: '⚠️ This is an unofficial app, not affiliated with Meta/Facebook.',
+        aboutDescription1: "This is a desktop interface application replacing Meta's discontinued Messenger Desktop.",
+        aboutDescription2: 'It securely utilizes the full features of messenger.com.',
+        disclaimer: 'This is an unofficial app, not affiliated with Meta/Facebook.',
+        visitWebsite: 'Visit Website',
+
+        checkForUpdates: 'Check for Updates',
+        checkingForUpdates: 'Checking for updates...',
+        updateAvailable: 'Update available. Downloading...',
+        updateNotAvailable: 'No updates available.',
+        updateError: 'Update error: ',
+        downloadManually: 'Download Manually',
+        updateDownloaded: 'Update downloaded. Restart to install?',
+        restartApp: 'Restart & Install',
+        closeBtn: 'Close',
     },
 
     // Vietnamese - Tiếng Việt
     vi: {
         settings: 'Cài đặt',
         appearance: 'Giao diện',
-        theme: 'Chủ đề',
-        themeDesc: 'Chọn giao diện màu sắc bạn thích',
-        themeSystem: 'Hệ thống',
-        themeLight: 'Sáng',
-        themeDark: 'Tối',
-        darkModeMessenger: 'Chế độ tối cho Messenger',
-        darkModeMessengerDesc: 'Áp dụng bộ lọc tối cho messenger.com',
+
         toggle: 'Bật/Tắt',
         privacy: 'Quyền riêng tư',
         hideReadReceipts: 'Ẩn trạng thái đã xem',
@@ -124,6 +133,8 @@ export const translations: Record<Language, Translations> = {
         hideTypingIndicatorDesc: 'Người khác sẽ không thấy khi bạn đang nhập',
         blockLinkTracking: 'Chặn theo dõi liên kết',
         blockLinkTrackingDesc: 'Xóa tracking của Facebook khỏi các liên kết',
+        minimizeToTray: 'Thu nhỏ xuống khay hệ thống',
+        minimizeToTrayDesc: 'Thu nhỏ cửa sổ xuống khay thay vì đóng',
         keyboardShortcuts: 'Phím tắt',
         openSettings: 'Mở Cài đặt',
         toggleDarkMode: 'Bật/Tắt chế độ tối',
@@ -140,22 +151,27 @@ export const translations: Record<Language, Translations> = {
         about: 'Giới thiệu',
         version: 'Phiên bản',
         aboutTitle: 'Messenger Neo',
-        aboutDescription1: 'Thay thế cho Messenger Desktop của Facebook - ứng dụng chính thức đã bị khai tử vào ngày 15/12/2025.',
-        aboutDescription2: 'Với ứng dụng này, bạn không cần mở trình duyệt web để sử dụng Messenger. Đây là một desktop app nhẹ gọn, nhanh chóng, với các tính năng bảo mật nâng cao.',
-        disclaimer: '⚠️ Đây là ứng dụng không chính thức, không liên kết với Meta/Facebook.',
+        aboutDescription1: 'Đây là ứng dụng dùng giao diện desktop thay thế cho Messenger Desktop của Meta đã khai tử.',
+        aboutDescription2: 'Với cơ chế dùng trọn vẹn các tính năng của messenger.com và an toàn.',
+        disclaimer: 'Đây là ứng dụng không chính thức, không liên kết với Meta/Facebook.',
+        visitWebsite: 'Ghé thăm Website',
+
+        checkForUpdates: 'Kiểm tra cập nhật',
+        checkingForUpdates: 'Đang kiểm tra cập nhật...',
+        updateAvailable: 'Có bản cập nhật mới. Đang tải xuống...',
+        updateNotAvailable: 'Không có bản cập nhật nào.',
+        updateError: 'Lỗi cập nhật: ',
+        downloadManually: 'Tải thủ công',
+        updateDownloaded: 'Đã tải xong. Khởi động lại để cài đặt?',
+        restartApp: 'Khởi động & Cài đặt',
+        closeBtn: 'Đóng',
     },
 
     // Japanese - 日本語
     ja: {
         settings: '設定',
         appearance: '外観',
-        theme: 'テーマ',
-        themeDesc: 'お好みの配色を選択してください',
-        themeSystem: 'システム',
-        themeLight: 'ライト',
-        themeDark: 'ダーク',
-        darkModeMessenger: 'Messengerのダークモード',
-        darkModeMessengerDesc: 'messenger.comにダークフィルターを適用',
+
         toggle: '切り替え',
         privacy: 'プライバシー',
         hideReadReceipts: '既読を非表示',
@@ -164,6 +180,8 @@ export const translations: Record<Language, Translations> = {
         hideTypingIndicatorDesc: '入力中であることを他の人に表示しない',
         blockLinkTracking: 'リンク追跡をブロック',
         blockLinkTrackingDesc: 'リンクからFacebookのトラッキングを削除',
+        minimizeToTray: 'トレイに最小化',
+        minimizeToTrayDesc: '閉じる代わりにシステムトレイに最小化',
         keyboardShortcuts: 'キーボードショートカット',
         openSettings: '設定を開く',
         toggleDarkMode: 'ダークモード切り替え',
@@ -180,22 +198,27 @@ export const translations: Record<Language, Translations> = {
         about: 'について',
         version: 'バージョン',
         aboutTitle: 'Messenger Neo',
-        aboutDescription1: 'Facebook Messenger Desktopの代替 - 公式アプリは2025年12月15日に廃止されました。',
-        aboutDescription2: 'このアプリを使えば、ウェブブラウザを開かずにMessengerを利用できます。軽量で高速なデスクトップアプリで、強化されたプライバシー機能を備えています。',
-        disclaimer: '⚠️ これは非公式アプリであり、Meta/Facebookとは提携していません。',
+        aboutDescription1: 'これは、廃止されたMetaのMessenger Desktopに代わるデスクトップアプリです。',
+        aboutDescription2: 'messenger.comの全機能を安全に利用する仕組みで動作します。',
+        disclaimer: 'これは非公式アプリであり、Meta/Facebookとは提携していません。',
+        visitWebsite: 'ウェブサイトへ',
+
+        checkForUpdates: '更新を確認',
+        checkingForUpdates: '更新を確認中...',
+        updateAvailable: '更新があります。ダウンロード中...',
+        updateNotAvailable: '更新はありません。',
+        updateError: '更新エラー: ',
+        downloadManually: '手動でダウンロード',
+        updateDownloaded: 'ダウンロード完了。再起動してインストールしますか？',
+        restartApp: '再起動してインストール',
+        closeBtn: '閉じる',
     },
 
     // Korean - 한국어
     ko: {
         settings: '설정',
         appearance: '모양',
-        theme: '테마',
-        themeDesc: '원하는 색상 구성표를 선택하세요',
-        themeSystem: '시스템',
-        themeLight: '라이트',
-        themeDark: '다크',
-        darkModeMessenger: 'Messenger 다크 모드',
-        darkModeMessengerDesc: 'messenger.com에 다크 필터 적용',
+
         toggle: '전환',
         privacy: '개인 정보',
         hideReadReceipts: '읽음 표시 숨기기',
@@ -204,6 +227,8 @@ export const translations: Record<Language, Translations> = {
         hideTypingIndicatorDesc: '다른 사람이 입력 중인지 볼 수 없습니다',
         blockLinkTracking: '링크 추적 차단',
         blockLinkTrackingDesc: '링크에서 Facebook 추적 제거',
+        minimizeToTray: '트레이로 최소화',
+        minimizeToTrayDesc: '닫는 대신 시스템 트레이로 최소화',
         keyboardShortcuts: '키보드 단축키',
         openSettings: '설정 열기',
         toggleDarkMode: '다크 모드 전환',
@@ -220,22 +245,27 @@ export const translations: Record<Language, Translations> = {
         about: '정보',
         version: '버전',
         aboutTitle: 'Messenger Neo',
-        aboutDescription1: 'Facebook Messenger Desktop 대체 - 공식 앱은 2025년 12월 15일에 중단되었습니다.',
-        aboutDescription2: '이 앱을 사용하면 웹 브라우저를 열지 않고도 Messenger를 사용할 수 있습니다. 향상된 개인 정보 보호 기능을 갖춘 가볍고 빠른 데스크톱 앱입니다.',
-        disclaimer: '⚠️ 이것은 비공식 앱이며 Meta/Facebook과 관련이 없습니다.',
+        aboutDescription1: '중단된 Meta의 Messenger Desktop을 대체하는 데스크톱 인터페이스 앱입니다.',
+        aboutDescription2: 'messenger.com의 모든 기능을 안전하게 사용하는 메커니즘으로 작동합니다.',
+        disclaimer: '이것은 비공식 앱이며 Meta/Facebook과 관련이 없습니다.',
+        visitWebsite: '웹사이트 방문',
+
+        checkForUpdates: '업데이트 확인',
+        checkingForUpdates: '업데이트 확인 중...',
+        updateAvailable: '업데이트를 사용할 수 있습니다. 다운로드 중...',
+        updateNotAvailable: '사용 가능한 업데이트가 없습니다.',
+        updateError: '업데이트 오류: ',
+        downloadManually: '수동 다운로드',
+        updateDownloaded: '업데이트 다운로드 완료. 다시 시작하여 설치하시겠습니까?',
+        restartApp: '다시 시작 및 설치',
+        closeBtn: '닫기',
     },
 
     // Spanish - Español
     es: {
         settings: 'Configuración',
         appearance: 'Apariencia',
-        theme: 'Tema',
-        themeDesc: 'Elige tu esquema de color preferido',
-        themeSystem: 'Sistema',
-        themeLight: 'Claro',
-        themeDark: 'Oscuro',
-        darkModeMessenger: 'Modo oscuro para Messenger',
-        darkModeMessengerDesc: 'Aplicar filtro oscuro a messenger.com',
+
         toggle: 'Alternar',
         privacy: 'Privacidad',
         hideReadReceipts: 'Ocultar confirmaciones de lectura',
@@ -244,6 +274,8 @@ export const translations: Record<Language, Translations> = {
         hideTypingIndicatorDesc: 'Otros no verán cuando estés escribiendo',
         blockLinkTracking: 'Bloquear seguimiento de enlaces',
         blockLinkTrackingDesc: 'Eliminar el rastreo de Facebook de los enlaces',
+        minimizeToTray: 'Minimizar a la bandeja',
+        minimizeToTrayDesc: 'Minimizar ventana a la bandeja en lugar de cerrar',
         keyboardShortcuts: 'Atajos de teclado',
         openSettings: 'Abrir Configuración',
         toggleDarkMode: 'Alternar modo oscuro',
@@ -260,22 +292,27 @@ export const translations: Record<Language, Translations> = {
         about: 'Acerca de',
         version: 'Versión',
         aboutTitle: 'Messenger Neo',
-        aboutDescription1: 'Reemplazo de Facebook Messenger Desktop - la aplicación oficial fue descontinuada el 15 de diciembre de 2025.',
-        aboutDescription2: 'Con esta aplicación, no necesitas abrir un navegador web para usar Messenger. Es una aplicación de escritorio ligera y rápida con funciones de privacidad mejoradas.',
-        disclaimer: '⚠️ Esta es una aplicación no oficial, no afiliada a Meta/Facebook.',
+        aboutDescription1: 'Esta es una interfaz de escritorio que reemplaza al descontinuado Messenger Desktop de Meta.',
+        aboutDescription2: 'Funciona utilizando de forma segura todas las características de messenger.com.',
+        disclaimer: 'Esta es una aplicación no oficial, no afiliada a Meta/Facebook.',
+        visitWebsite: 'Visitar sitio web',
+
+        checkForUpdates: 'Buscar actualizaciones',
+        checkingForUpdates: 'Buscando actualizaciones...',
+        updateAvailable: 'Actualización disponible. Descargando...',
+        updateNotAvailable: 'No hay actualizaciones disponibles.',
+        updateError: 'Error de actualización: ',
+        downloadManually: 'Descargar manualmente',
+        updateDownloaded: 'Actualización descargada. ¿Reiniciar para instalar?',
+        restartApp: 'Reiniciar e instalar',
+        closeBtn: 'Cerrar',
     },
 
     // French - Français
     fr: {
         settings: 'Paramètres',
         appearance: 'Apparence',
-        theme: 'Thème',
-        themeDesc: 'Choisissez votre palette de couleurs préférée',
-        themeSystem: 'Système',
-        themeLight: 'Clair',
-        themeDark: 'Sombre',
-        darkModeMessenger: 'Mode sombre pour Messenger',
-        darkModeMessengerDesc: 'Appliquer un filtre sombre à messenger.com',
+
         toggle: 'Basculer',
         privacy: 'Confidentialité',
         hideReadReceipts: 'Masquer les confirmations de lecture',
@@ -284,6 +321,8 @@ export const translations: Record<Language, Translations> = {
         hideTypingIndicatorDesc: 'Les autres ne verront pas quand vous tapez',
         blockLinkTracking: 'Bloquer le suivi des liens',
         blockLinkTrackingDesc: 'Supprimer le suivi Facebook des liens',
+        minimizeToTray: 'Réduire dans la barre d\'état',
+        minimizeToTrayDesc: 'Réduire la fenêtre dans la barre d\'état au lieu de fermer',
         keyboardShortcuts: 'Raccourcis clavier',
         openSettings: 'Ouvrir les paramètres',
         toggleDarkMode: 'Basculer le mode sombre',
@@ -300,22 +339,27 @@ export const translations: Record<Language, Translations> = {
         about: 'À propos',
         version: 'Version',
         aboutTitle: 'Messenger Neo',
-        aboutDescription1: "Remplacement de Facebook Messenger Desktop - l'application officielle a été abandonnée le 15 décembre 2025.",
-        aboutDescription2: "Avec cette application, vous n'avez pas besoin d'ouvrir un navigateur web pour utiliser Messenger. C'est une application de bureau légère et rapide avec des fonctionnalités de confidentialité améliorées.",
-        disclaimer: '⚠️ Ceci est une application non officielle, non affiliée à Meta/Facebook.',
+        aboutDescription1: "Ceci est une interface de bureau remplaçant Messenger Desktop de Meta, désormais abandonné.",
+        aboutDescription2: "Elle fonctionne en utilisant intégralement et en toute sécurité les fonctionnalités de messenger.com.",
+        disclaimer: 'Ceci est une application non officielle, non affiliée à Meta/Facebook.',
+        visitWebsite: 'Visiter le site web',
+
+        checkForUpdates: 'Vérifier les mises à jour',
+        checkingForUpdates: 'Recherche de mises à jour...',
+        updateAvailable: 'Mise à jour disponible. Téléchargement...',
+        updateNotAvailable: 'Aucune mise à jour disponible.',
+        updateError: 'Erreur de mise à jour: ',
+        downloadManually: 'Télécharger manuellement',
+        updateDownloaded: 'Mise à jour téléchargée. Redémarrer pour installer ?',
+        restartApp: 'Redémarrer & Installer',
+        closeBtn: 'Fermer',
     },
 
     // German - Deutsch
     de: {
         settings: 'Einstellungen',
         appearance: 'Erscheinungsbild',
-        theme: 'Design',
-        themeDesc: 'Wählen Sie Ihr bevorzugtes Farbschema',
-        themeSystem: 'System',
-        themeLight: 'Hell',
-        themeDark: 'Dunkel',
-        darkModeMessenger: 'Dunkelmodus für Messenger',
-        darkModeMessengerDesc: 'Dunklen Filter auf messenger.com anwenden',
+
         toggle: 'Umschalten',
         privacy: 'Datenschutz',
         hideReadReceipts: 'Lesebestätigungen ausblenden',
@@ -324,6 +368,8 @@ export const translations: Record<Language, Translations> = {
         hideTypingIndicatorDesc: 'Andere sehen nicht, wenn Sie tippen',
         blockLinkTracking: 'Link-Tracking blockieren',
         blockLinkTrackingDesc: 'Facebook-Tracking aus Links entfernen',
+        minimizeToTray: 'In System-Tray minimieren',
+        minimizeToTrayDesc: 'Fenster in System-Tray minimieren statt schließen',
         keyboardShortcuts: 'Tastaturkürzel',
         openSettings: 'Einstellungen öffnen',
         toggleDarkMode: 'Dunkelmodus umschalten',
@@ -340,9 +386,20 @@ export const translations: Record<Language, Translations> = {
         about: 'Über',
         version: 'Version',
         aboutTitle: 'Messenger Neo',
-        aboutDescription1: 'Ersatz für Facebook Messenger Desktop - die offizielle App wurde am 15. Dezember 2025 eingestellt.',
-        aboutDescription2: 'Mit dieser App müssen Sie keinen Webbrowser öffnen, um Messenger zu nutzen. Es ist eine leichte, schnelle Desktop-App mit erweiterten Datenschutzfunktionen.',
-        disclaimer: '⚠️ Dies ist eine inoffizielle App, nicht mit Meta/Facebook verbunden.',
+        aboutDescription1: 'Dies ist eine Desktop-Oberfläche, die den eingestellten Messenger Desktop von Meta ersetzt.',
+        aboutDescription2: 'Sie nutzt sicher den vollen Funktionsumfang von messenger.com.',
+        disclaimer: 'Dies ist eine inoffizielle App, nicht mit Meta/Facebook verbunden.',
+        visitWebsite: 'Website besuchen',
+
+        checkForUpdates: 'Nach Updates suchen',
+        checkingForUpdates: 'Suche nach Updates...',
+        updateAvailable: 'Update verfügbar. Wird heruntergeladen...',
+        updateNotAvailable: 'Keine Updates verfügbar.',
+        updateError: 'Update-Fehler: ',
+        downloadManually: 'Manuell herunterladen',
+        updateDownloaded: 'Update heruntergeladen. Zum Installieren neu starten?',
+        restartApp: 'Neu starten & installieren',
+        closeBtn: 'Schließen',
     },
 };
 

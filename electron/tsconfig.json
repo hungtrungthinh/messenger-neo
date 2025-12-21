@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "target": "ESNext",
+        "sourceMap": true,
+        "outDir": "../dist-electron",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true
+    },
+    "include": [
+        "**/*.ts"
+    ]
+}

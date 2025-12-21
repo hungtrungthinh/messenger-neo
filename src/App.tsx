@@ -1,236 +1,271 @@
 import { useState, useEffect } from "react";
-import { invoke } from "@tauri-apps/api/core";
+// import { invoke } from "@tauri-apps/api/core"; // Removed Tauri
 import "./App.css";
-import { Language, getSystemLanguage, useTranslation } from "./i18n";
+import { Language, getSystemLanguage, useTranslation, getSupportedLanguages } from "./i18n";
 
 // Settings Interface
-interface PrivacySettings {
+interface AppSettings {
   hideReadReceipts: boolean;
   hideTypingIndicator: boolean;
   blockTracking: boolean;
+  startAtLogin: boolean;
+  minimizeToTray: boolean;
 }
 
-type Theme = "light" | "dark" | "system";
+// type Tab = 'general' | 'privacy' | 'about';
+
 
 function App() {
-  const [theme, setTheme] = useState<Theme>("system");
+  // const [activeTab, setActiveTab] = useState<Tab>('general');
+
   const [language, setLanguage] = useState<Language>(getSystemLanguage());
-  const [privacySettings, setPrivacySettings] = useState<PrivacySettings>({
+  const [settings, setSettings] = useState<AppSettings>({
     hideReadReceipts: true,
     hideTypingIndicator: true,
     blockTracking: true,
+    startAtLogin: true,
+    minimizeToTray: true,
   });
+
+  const [updateStatus, setUpdateStatus] = useState<string>('');
+
+  // Listen for update events
+  useEffect(() => {
+    if (window.electron?.ipcRenderer) {
+      return window.electron.ipcRenderer.on('update-message', (msg: string) => {
+        setUpdateStatus(msg);
+      });
+    }
+  }, []);
 
   // Get translations
   const t = useTranslation(language);
 
-  // Apply theme to settings window
-  useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "system") {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      root.setAttribute("data-theme", prefersDark ? "dark" : "light");
-    } else {
-      root.setAttribute("data-theme", theme);
-    }
-  }, [theme]);
-
   // Load saved settings
   useEffect(() => {
-    const savedTheme = localStorage.getItem("messenger-theme") as Theme;
-    const savedPrivacy = localStorage.getItem("messenger-privacy");
-    const savedLanguage = localStorage.getItem("messenger-language") as Language;
+    const initSettings = async () => {
+      if (window.electron?.ipcRenderer) {
+        try {
+          // Source of truth: Electron Main Process
+          const remoteSettings = await window.electron.ipcRenderer.invoke('get-settings');
+          if (remoteSettings) {
+            setSettings(prev => ({ ...prev, ...remoteSettings }));
+          }
+        } catch (error) {
+          console.error("Failed to load settings from Electron:", error);
+        }
+      } else {
+        // Fallback for web dev mode
+        const savedSettings = localStorage.getItem("messenger-settings");
+        if (savedSettings) {
+          setSettings(prev => ({ ...prev, ...JSON.parse(savedSettings) }));
+        }
+      }
 
-    if (savedTheme) setTheme(savedTheme);
-    if (savedPrivacy) setPrivacySettings(JSON.parse(savedPrivacy));
-    if (savedLanguage) {
-      setLanguage(savedLanguage);
-    } else {
-      // Auto-detect from system on first run
-      setLanguage(getSystemLanguage());
-    }
+      const savedLanguage = localStorage.getItem("messenger-language") as Language;
+      if (savedLanguage) {
+        setLanguage(savedLanguage);
+      }
+    };
+
+    initSettings();
   }, []);
 
-  // Save settings
+  // Save settings & Sync with Electron
   useEffect(() => {
-    localStorage.setItem("messenger-theme", theme);
-    localStorage.setItem("messenger-privacy", JSON.stringify(privacySettings));
+    localStorage.setItem("messenger-settings", JSON.stringify(settings));
     localStorage.setItem("messenger-language", language);
-  }, [theme, privacySettings, language]);
 
-  const togglePrivacySetting = async (key: keyof PrivacySettings) => {
-    const newValue = !privacySettings[key];
-    setPrivacySettings(prev => ({
+    // Send updates to Main Process (SAFE CHECK)
+    // Avoid sending updates if we are just initializing? 
+    // Ideally we should track if verified loaded, but for now this is okay 
+    // as main process acts as store.
+    if (window.electron?.ipcRenderer) {
+      // We only want to invoke if we actually have changes or it's user driven. 
+      // React strict mode might double invoke, but it's safe.
+      window.electron.ipcRenderer.invoke('update-settings', settings).catch(console.error);
+    }
+  }, [settings, language]);
+
+  const toggleSetting = (key: keyof AppSettings) => {
+    setSettings(prev => ({
       ...prev,
-      [key]: newValue
+      [key]: !prev[key]
     }));
-
-    // Apply to main window via Tauri commands
-    if (key === "hideReadReceipts") {
-      try {
-        await invoke("hide_read_receipts", { hide: newValue });
-      } catch (e) {
-        console.error("Failed to toggle read receipts:", e);
-      }
-    }
   };
 
-  const toggleDarkMode = async () => {
-    try {
-      await invoke("toggle_dark_mode");
-    } catch (e) {
-      console.error("Failed to toggle dark mode:", e);
-    }
-  };
+  const isElectron = !!window.electron?.ipcRenderer;
+  // @ts-expect-error Custom property
+  const platform = window.electron?.platform || 'darwin'; // fallback to mac if unknown
+  const platformClass = platform === 'darwin' ? 'os-mac' : (platform === 'win32' ? 'os-win' : 'os-linux');
 
   return (
-    <div className="settings-app">
+    <div className={`settings-app ${platformClass}`}>
+      {!isElectron && (
+        <div className="error-banner">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 6, verticalAlign: 'text-bottom' }}>
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          IPC Disconnected
+        </div>
+      )}
+
       <div className="settings-header">
-        <h1>{t.settings}</h1>
+        {/* Draggable Header Area */}
+        <h1>Settings</h1>
       </div>
 
-      <div className="settings-body">
-        <section className="settings-section">
-          <h2>{t.appearance}</h2>
+      <div className="settings-content">
 
-          <div className="setting-item">
-            <div className="setting-info">
-              <label>{t.theme}</label>
-              <span className="setting-desc">{t.themeDesc}</span>
-            </div>
-            <select value={theme} onChange={(e) => setTheme(e.target.value as Theme)}>
-              <option value="system">{t.themeSystem}</option>
-              <option value="light">{t.themeLight}</option>
-              <option value="dark">{t.themeDark}</option>
-            </select>
-          </div>
-
-          <div className="setting-item">
-            <div className="setting-info">
-              <label>{t.darkModeMessenger}</label>
-              <span className="setting-desc">{t.darkModeMessengerDesc}</span>
-            </div>
-            <button className="action-btn" onClick={toggleDarkMode}>
-              {t.toggle}
-            </button>
-          </div>
-        </section>
-
-        <section className="settings-section">
-          <h2>{t.language}</h2>
-
-          <div className="setting-item">
-            <div className="setting-info">
-              <label>{t.language}</label>
-              <span className="setting-desc">{t.languageDesc}</span>
-            </div>
-            <select value={language} onChange={(e) => setLanguage(e.target.value as Language)}>
-              <option value="en">English</option>
-              <option value="vi">Tiếng Việt</option>
-              <option value="ja">日本語</option>
-              <option value="ko">한국어</option>
-              <option value="es">Español</option>
-              <option value="fr">Français</option>
-              <option value="de">Deutsch</option>
-            </select>
-          </div>
-        </section>
-
-        <section className="settings-section">
-          <h2>{t.privacy}</h2>
-
-          <div className="setting-item">
-            <div className="setting-info">
-              <label>{t.hideReadReceipts}</label>
-              <span className="setting-desc">{t.hideReadReceiptsDesc}</span>
-            </div>
-            <button
-              className={`toggle ${privacySettings.hideReadReceipts ? 'active' : ''}`}
-              onClick={() => togglePrivacySetting('hideReadReceipts')}
-            >
-              <span className="toggle-slider" />
-            </button>
-          </div>
-
-          <div className="setting-item">
-            <div className="setting-info">
-              <label>{t.hideTypingIndicator}</label>
-              <span className="setting-desc">{t.hideTypingIndicatorDesc}</span>
-            </div>
-            <button
-              className={`toggle ${privacySettings.hideTypingIndicator ? 'active' : ''}`}
-              onClick={() => togglePrivacySetting('hideTypingIndicator')}
-            >
-              <span className="toggle-slider" />
-            </button>
-          </div>
-
-          <div className="setting-item">
-            <div className="setting-info">
-              <label>{t.blockLinkTracking}</label>
-              <span className="setting-desc">{t.blockLinkTrackingDesc}</span>
-            </div>
-            <button
-              className={`toggle ${privacySettings.blockTracking ? 'active' : ''}`}
-              onClick={() => togglePrivacySetting('blockTracking')}
-            >
-              <span className="toggle-slider" />
-            </button>
-          </div>
-        </section>
-
-        <section className="settings-section">
-          <h2>{t.keyboardShortcuts}</h2>
-          <div className="shortcuts-list">
-            <div className="shortcut-item">
-              <span className="shortcut-key">⌘ + ,</span>
-              <span>{t.openSettings}</span>
-            </div>
-            <div className="shortcut-item">
-              <span className="shortcut-key">⌘ + D</span>
-              <span>{t.toggleDarkMode}</span>
-            </div>
-            <div className="shortcut-item">
-              <span className="shortcut-key">⌘ + Q</span>
-              <span>{t.quitApp}</span>
-            </div>
-          </div>
-        </section>
-
-        <section className="settings-section about-section">
-          <h2>{t.about}</h2>
-          <div className="about-content">
-            <div className="app-info">
-              <svg className="messenger-logo" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fillRule="evenodd" clipRule="evenodd" d="M18 0C7.61 0 0 7.16 0 17.36C0 22.77 2.27 27.38 5.88 30.52C6.18 30.79 6.36 31.17 6.37 31.58L6.51 35.52C6.56 36.61 7.68 37.33 8.7 36.93L13.17 35.12C13.49 34.99 13.85 34.96 14.19 35.03C15.39 35.29 16.66 35.43 18 35.43C28.39 35.43 36 28.27 36 18.07C36 7.88 28.39 0 18 0Z" fill="url(#paint0)" />
-                <path d="M7.2 22.32L12.61 14.02C13.35 12.88 14.87 12.58 15.99 13.35L20.34 16.58C20.66 16.82 21.1 16.82 21.41 16.57L27.18 12.05C27.93 11.46 28.91 12.38 28.39 13.18L22.98 21.48C22.24 22.62 20.72 22.92 19.6 22.15L15.25 18.92C14.93 18.68 14.49 18.68 14.18 18.93L8.41 23.45C7.66 24.04 6.68 23.12 7.2 22.32Z" fill="white" />
-                <defs>
-                  <radialGradient id="paint0" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(6.18 36) rotate(-57.14) scale(40.95)">
-                    <stop stopColor="#0099FF" />
-                    <stop offset="0.61" stopColor="#A033FF" />
-                    <stop offset="0.93" stopColor="#FF5280" />
-                    <stop offset="1" stopColor="#FF7061" />
-                  </radialGradient>
-                </defs>
-              </svg>
-              <div>
-                <h3>{t.aboutTitle}</h3>
-                <p className="version">{t.version} 0.1.0</p>
+        {/* GROUP 1: APPEARANCE & SYSTEM */}
+        <div className="settings-section">
+          <h2>{t.appearance} & System</h2>
+          <div className="settings-group">
+            <div className="setting-item">
+              <div className="setting-info">
+                <label>Start at Login</label>
               </div>
+              <div
+                className={`toggle ${settings.startAtLogin ? 'active' : ''}`}
+                onClick={() => toggleSetting('startAtLogin')}
+              />
             </div>
-            <div className="about-description">
-              <p>
-                <strong>{t.aboutDescription1}</strong>
-              </p>
-              <p>
-                {t.aboutDescription2}
-              </p>
+
+            {platform !== 'darwin' && (
+              <div className="setting-item">
+                <div className="setting-info">
+                  <label>{t.minimizeToTray || 'Minimize to Tray'}</label>
+                </div>
+                <div
+                  className={`toggle ${settings.minimizeToTray ? 'active' : ''}`}
+                  onClick={() => toggleSetting('minimizeToTray')}
+                />
+              </div>
+            )}
+
+            <div className="setting-item">
+              <div className="setting-info">
+                <label>{t.language}</label>
+              </div>
+              <select value={language} onChange={(e) => setLanguage(e.target.value as Language)}>
+                {getSupportedLanguages().map((lang) => (
+                  <option key={lang.code} value={lang.code}>
+                    {lang.name}
+                  </option>
+                ))}
+              </select>
             </div>
-            <p className="disclaimer">
+          </div>
+        </div>
+
+        {/* GROUP 2: PRIVACY */}
+        <div className="settings-section">
+          <h2>{t.privacy}</h2>
+          <div className="settings-group">
+            <div className="setting-item">
+              <div className="setting-info">
+                <label>{t.hideReadReceipts}</label>
+              </div>
+              <div
+                className={`toggle ${settings.hideReadReceipts ? 'active' : ''}`}
+                onClick={() => toggleSetting('hideReadReceipts')}
+              />
+            </div>
+
+            <div className="setting-item">
+              <div className="setting-info">
+                <label>{t.hideTypingIndicator}</label>
+              </div>
+              <div
+                className={`toggle ${settings.hideTypingIndicator ? 'active' : ''}`}
+                onClick={() => toggleSetting('hideTypingIndicator')}
+              />
+            </div>
+
+            <div className="setting-item">
+              <div className="setting-info">
+                <label>{t.blockLinkTracking}</label>
+              </div>
+              <div
+                className={`toggle ${settings.blockTracking ? 'active' : ''}`}
+                onClick={() => toggleSetting('blockTracking')}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* GROUP 3: ABOUT */}
+        <div className="settings-section">
+          <div className="settings-group" style={{ padding: '20px', textAlign: 'center', display: 'block' }}>
+            <h3 style={{ margin: '0 0 5px 0', fontSize: 16 }}>Messenger Neo</h3>
+            <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: 12 }}>v0.1.0</p>
+
+            <a
+              href="https://messenger-neo.boringlab.site"
+              target="_blank"
+              rel="noreferrer"
+              style={{ display: 'inline-block', marginTop: 8, fontSize: 12, color: '#0084FF', textDecoration: 'none', fontWeight: 500 }}
+            >
+              {t.visitWebsite}
+            </a>
+
+            {/* Auto Update UI */}
+            {isElectron && (
+              <div style={{ marginTop: 15 }}>
+                <button
+                  className="update-btn"
+                  onClick={() => {
+                    setUpdateStatus(t.checkingForUpdates);
+                    // IPC now typed
+                    window.electron.ipcRenderer.invoke('check-for-updates');
+                  }}
+                  disabled={updateStatus === t.checkingForUpdates || updateStatus.includes('Downloading')}
+                  style={{
+                    padding: '6px 12px',
+                    borderRadius: '6px',
+                    border: '1px solid var(--border-color)',
+                    background: 'var(--bg-secondary)',
+                    color: 'var(--text-primary)',
+                    fontSize: 12,
+                    cursor: 'pointer'
+                  }}
+                >
+                  {t.checkForUpdates}
+                </button>
+                {updateStatus && (
+                  <p style={{ marginTop: 8, fontSize: 11, color: 'var(--text-secondary)' }}>
+                    {updateStatus}
+                    {updateStatus.startsWith(t.updateError) && (
+                      <a
+                        href="https://messenger-neo.boringlab.site"
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{ display: 'block', marginTop: 5, color: '#ff3b30' }}
+                      >
+                        {t.downloadManually}
+                      </a>
+                    )}
+                    {updateStatus === t.updateDownloaded && (
+                      <button
+                        onClick={() => window.electron.ipcRenderer.invoke('quit-and-install')}
+                        style={{ display: 'block', margin: '5px auto', padding: '4px 8px', cursor: 'pointer' }}
+                      >
+                        {t.restartApp}
+                      </button>
+                    )}
+                  </p>
+                )}
+              </div>
+            )}
+
+            <p style={{ marginTop: 15, fontSize: 12, lineHeight: 1.4, color: 'var(--text-secondary)' }}>
               {t.disclaimer}
             </p>
           </div>
-        </section>
+        </div>
+
       </div>
     </div>
   );
