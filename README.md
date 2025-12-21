@@ -1,6 +1,6 @@
 # Messenger Desktop
 
-A privacy-focused, cross-platform Messenger desktop client built with Tauri + React.
+A privacy-focused, cross-platform Messenger desktop client built with Electron + React.
 
 ## Features
 
@@ -14,17 +14,15 @@ A privacy-focused, cross-platform Messenger desktop client built with Tauri + Re
 
 ## Tech Stack
 
-- **Frontend**: React + TypeScript (for Settings UI)
-- **Backend**: Rust + Tauri 2.0
-- **WebView**: Native macOS WebKit with Chrome User-Agent
+- **Frontend**: React + TypeScript (Settings UI & Logic)
+- **Core**: Electron (Main Process)
+- **Build**: Electron Builder
 
 ## Installation
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (v18+)
-- [Rust](https://rustup.rs/)
-- [Tauri Prerequisites](https://tauri.app/v1/guides/getting-started/prerequisites)
+- [Node.js](https://nodejs.org/) (v20+)
 
 ### Development
 
@@ -33,17 +31,17 @@ A privacy-focused, cross-platform Messenger desktop client built with Tauri + Re
 npm install
 
 # Run in development mode
-npm run tauri dev
+npm run electron:dev
 ```
 
 ### Build for Production
 
 ```bash
 # Build for your current platform
-npm run tauri build
+npm run build
 ```
 
-The built application will be in `src-tauri/target/release/bundle/`.
+The built installers will be in `dist/`.
 
 ## Keyboard Shortcuts
 
@@ -69,21 +67,17 @@ Right-click the tray icon for:
 - Settings...
 - Quit Messenger
 
-## Project Structure
-
 ```
-messenger-desktop/
-├── src/                    # React frontend (Settings UI)
-│   ├── App.tsx            # Settings application component
-│   ├── App.css            # Styles with dark/light themes
-│   └── main.tsx           # React entry point
-├── src-tauri/              # Rust backend
-│   ├── src/
-│   │   ├── lib.rs         # Tauri setup, menus, tray, JS injection
-│   │   └── main.rs        # Entry point
-│   ├── Cargo.toml         # Rust dependencies
-│   └── tauri.conf.json    # Tauri configuration (loads messenger.com)
-├── public/                 # Static assets
+messenger-neo/
+├── electron/               # Electron Main Process & Preload
+│   ├── main.ts            # Entry point (Window, IPC, Updater)
+│   ├── preload.ts         # Context Bridge
+│   └── analytics.ts       # GA4 Implementation
+├── src/                    # React Frontend
+│   ├── App.tsx            # UI Components
+│   └── main.tsx           # React Entry
+├── public/                 # Static Assets (Icons)
+├── dist/                   # Build Artifacts
 └── package.json
 ```
 
@@ -119,4 +113,5 @@ See [LICENSE](LICENSE) for full legal text.
 ## Acknowledgments
 
 - Inspired by [Caprine](https://github.com/sindresorhus/caprine)
-- Built with [Tauri 2.0](https://tauri.app/)
+- Built with [Electron](https://www.electronjs.org/)
+- Built with [Vite](https://vitejs.dev/)
