@@ -103,7 +103,16 @@ This application loads [messenger.com](https://www.messenger.com) in a native We
 
 ## 📄 License
 
-MIT License
+## 📄 License
+
+**COPYRIGHT (C) 2025 MESSENGER NEO TEAM. ALL RIGHTS RESERVED.**
+
+This project is **PROPRIETARY** and is **NOT** Open Source.
+- You are **NOT** allowed to clone, copy, modify, distribute, or use this code for commercial purposes.
+- The source code is available for **viewing only**.
+- Unauthroized use will be subject to legal action.
+
+See [LICENSE](LICENSE) for details.
 
 ## 🙏 Acknowledgments
 

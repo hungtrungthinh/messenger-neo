@@ -4,6 +4,8 @@
   "description": "A privacy-focused Messenger client",
   "author": "Messenger Neo Team <support@boringlab.site>",
   "version": "1.14.1",
+  "license": "UNLICENSED",
+  "private": true,
   "main": "dist-electron/main.js",
   "type": "module",
   "build": {
