@@ -3,10 +3,20 @@ name: Build Messenger Neo
 on:
   push:
     branches: [ main, master, canary ]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'LICENSE'
+      - '.gitignore'
     tags:
       - 'v*'
   pull_request:
     branches: [ main, master, canary ]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'LICENSE'
+      - '.gitignore'
   workflow_dispatch:
 
 permissions:

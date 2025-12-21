@@ -112,6 +112,5 @@ See [LICENSE](LICENSE) for full legal text.
 
 ## Acknowledgments
 
-- Inspired by [Caprine](https://github.com/sindresorhus/caprine)
 - Built with [Electron](https://www.electronjs.org/)
 - Built with [Vite](https://vitejs.dev/)
