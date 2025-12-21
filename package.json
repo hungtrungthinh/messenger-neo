@@ -55,13 +55,13 @@
       "publish": {
         "provider": "generic",
         "url": "https://download.boringlab.site/apps/messenger-neo/win/"
-      },
-      "appx": {
-        "identityName": "MessengerNeo",
-        "publisher": "CN=Messenger Neo Team",
-        "publisherDisplayName": "Messenger Neo Team",
-        "applicationId": "MessengerNeo"
       }
+    },
+    "appx": {
+      "identityName": "MessengerNeo",
+      "publisher": "CN=Messenger Neo Team",
+      "publisherDisplayName": "Messenger Neo Team",
+      "applicationId": "MessengerNeo"
     },
     "linux": {
       "target": [
