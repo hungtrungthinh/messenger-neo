@@ -2,9 +2,9 @@ name: Build Messenger Neo
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, canary ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master, canary ]
   workflow_dispatch:
 
 jobs:
