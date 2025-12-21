@@ -1,3 +1,13 @@
+/**
+ * MESSENGER NEO - A Privacy-Focused Messenger Client
+ * Copyright (c) 2025 Messenger Neo Team.
+ *
+ * Licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+ * YOU MAY NOT US THIS FILE EXCEPT IN COMPLIANCE WITH THE LICENSE.
+ *
+ * COMMERCIAL USER AND UNAUTHORIZED MODIFICATIONS ARE STRICTLY PROHIBITED.
+ */
+
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { app, BrowserWindow, shell, ipcMain, nativeTheme, Tray, Menu } from 'electron'
