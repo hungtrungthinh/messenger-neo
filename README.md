@@ -99,14 +99,17 @@ This application loads [messenger.com](https://www.messenger.com) in a native We
 
 ## License
 
-**CC BY-NC-ND 4.0** (Attribution-NonCommercial-NoDerivatives)
+## License
 
-This project is licensed under the **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License**.
+**GNU AGPLv3** (Affero General Public License v3.0)
 
-Builds and Source Code are provided for **Educational and Personal Use Only**.
-- **Commercial Use:** STRICTLY PROHIBITED.
-- **Modification:** You may NOT distribute modified versions (Derivatives).
-- **Private Development:** You must obtain explicit permission from the author before using this code for private custom development.
+This project is licensed under the **GNU Affero General Public License v3.0**.
+
+- **Permissions**: Commercial use, Modification, Distribution, Private use.
+- **Conditions**: License and copyright notice, State changes, Disclose source, **Network Use is Distribution**.
+- **Limitations**: Liability, Warranty.
+
+The AGPLv3 is a copyleft license requires that if you run a modified version of this software over a network, you must make the source code available to users of that network.
 
 See [LICENSE](LICENSE) for full legal text.
 
