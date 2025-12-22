@@ -2,11 +2,9 @@
   "name": "messenger-neo",
   "private": true,
   "description": "A privacy-focused Messenger client",
-  "description": "A privacy-focused Messenger client",
   "author": "Thinh Nguyen <support@boringlab.site>",
   "version": "1.14.1",
   "license": "AGPL-3.0",
-  "private": true,
   "main": "dist-electron/main.js",
   "type": "module",
   "build": {
