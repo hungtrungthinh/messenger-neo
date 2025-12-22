@@ -33,3 +33,6 @@ dist-ssr
 *.key
 *.keystore
 gh_token.txt
+
+# Documentation (Local Only)
+docs/
