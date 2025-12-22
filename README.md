@@ -114,3 +114,4 @@ See [LICENSE](LICENSE) for full legal text.
 
 - Built with [Electron](https://www.electronjs.org/)
 - Built with [Vite](https://vitejs.dev/)
+
