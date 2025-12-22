@@ -1,6 +1,6 @@
 /**
  * MESSENGER NEO - A Privacy-Focused Messenger Client
- * Copyright (c) 2025 Messenger Neo Team.
+ * Copyright (c) 2025 Thinh Nguyen (Boring Lab).
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
