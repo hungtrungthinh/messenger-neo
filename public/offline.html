@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messenger Neo - Offline</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-primary: #1c1e21;
+            --text-secondary: #65676b;
+            --accent-color: #0084ff;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1c1c1e;
+                --text-primary: #e4e6eb;
+                --text-secondary: #b0b3b8;
+                --accent-color: #0084ff;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            user-select: none;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 24px;
+            filter: grayscale(1) opacity(0.5);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0 0 12px 0;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin: 0 0 32px 0;
+            line-height: 1.5;
+        }
+
+        .retry-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .retry-btn:hover {
+            opacity: 0.9;
+        }
+
+        .retry-btn:active {
+            opacity: 0.8;
+        }
+
+        .status {
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="icons/128x128.png" alt="Logo" class="icon">
+        <h1 id="title">No Internet Connection</h1>
+        <p id="desc">Messenger Neo couldn't connect to the server. Please check your internet connection and try again.
+        </p>
+        <button class="retry-btn" id="retry-btn" onclick="retry()">Retry Connection</button>
+        <div class="status" id="status">Checking connection...</div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                title: "No Internet Connection",
+                desc: "Messenger Neo couldn't connect to the server. Please check your internet connection and try again.",
+                btn: "Retry Connection",
+                reconnecting: "Attempting to reconnect...",
+                available: "Connection available. Retrying...",
+                offline: "Still offline. Waiting for connection..."
+            },
+            vi: {
+                title: "Không có kết nối Internet",
+                desc: "Messenger Neo không thể kết nối tới máy chủ. Vui lòng kiểm tra lại kết nối mạng của bạn.",
+                btn: "Thử lại",
+                reconnecting: "Đang thử kết nối lại...",
+                available: "Đã có mạng. Đang tải lại...",
+                offline: "Vẫn mất mạng. Đang chờ kết nối..."
+            }
+        };
+
+        const userLang = navigator.language.startsWith('vi') ? 'vi' : 'en';
+        const t = translations[userLang];
+
+        // Apply translations
+        document.getElementById('title').innerText = t.title;
+        document.getElementById('desc').innerText = t.desc;
+        document.getElementById('retry-btn').innerText = t.btn;
+        document.getElementById('status').innerText = t.offline;
+
+        function retry() {
+            document.getElementById('status').innerText = t.reconnecting;
+            window.location.href = "https://www.messenger.com";
+        }
+
+        // Auto-retry when back online
+        window.addEventListener('online', () => {
+            retry();
+        });
+
+        // Update status UI
+        function updateStatus() {
+            const status = document.getElementById('status');
+            if (navigator.onLine) {
+                status.innerText = t.available;
+                retry();
+            } else {
+                status.innerText = t.offline;
+            }
+        }
+
+        setInterval(() => {
+            if (navigator.onLine) {
+                updateStatus();
+            }
+        }, 5000);
+
+        if (navigator.onLine) {
+            updateStatus();
+        }
+    </script>
+</body>
+
+</html>

@@ -190,6 +190,17 @@ function createMainWindow() {
         injectPrivacyCode();
     });
 
+    // Handle No Internet / Load Failure
+    mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription, validatedURL) => {
+        // -3 is aborted (often happens during reloads), we ignore it
+        // We only care if the main Messenger page fails
+        if (errorCode !== -3 && validatedURL.includes('messenger.com')) {
+            console.log('Failed to load:', validatedURL, errorCode, errorDescription);
+            const offlinePath = path.join(process.env.VITE_PUBLIC || '', 'offline.html');
+            mainWindow?.loadFile(offlinePath);
+        }
+    });
+
     mainWindow.on('close', (event) => {
         // @ts-expect-error Custom property
         // On macOS, we DO NOT minimize to tray. We just let standard behavior happen.
