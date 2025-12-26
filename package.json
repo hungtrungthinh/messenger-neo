@@ -3,7 +3,7 @@
   "private": true,
   "description": "A privacy-focused Messenger client",
   "author": "Thinh Nguyen <support@boringlab.site>",
-  "version": "1.14.1",
+  "version": "1.15.0",
   "license": "AGPL-3.0",
   "main": "dist-electron/main.js",
   "type": "module",
